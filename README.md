@@ -28,6 +28,7 @@ To run the project locally, you'll need to install Docker and Docker Compose:
 
 Or, for starting it locally, start a local redis instance and set the environment variable `CELERY_BROKER_URL` to something like `redis://[redis-host]:6379/0`.
 
+
 ## Make DB changes
 
 At the root of the project, run
@@ -39,3 +40,18 @@ to create a new schema and run
     python manage.py db upgrade
 
 to perform the migration in the database.
+
+
+## Run
+
+To run the project containers, you'll need to build the images first:
+
+	docker-compose build
+
+Once that's done, you can run it:
+
+	docker-compose up
+
+Or to run it in the background:
+
+	docker-compose up -d
