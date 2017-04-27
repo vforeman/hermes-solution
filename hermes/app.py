@@ -94,6 +94,9 @@ def create_email_view():
     db.session.commit()
 
     async_task = super_slow_email_sender.delay(email.id)
+    
+    # ID of the async task
+    # async_task.id
 
     data = email_schema.dump(email).data
     return jsonify(data=data)
@@ -107,6 +110,18 @@ def retrieve_email_view(email_id):
         return make_response(
             jsonify(error='Invalid Email ID: {id}'.format(id=email_id)),
             404)
+    
+    # If you store the ID of the async_task, you can retrieve it's AsyncResult instance with
+    # task_async_result = super_slow_email_sender.AsyncResult([ID])
+    #
+    # And get the status:
+    # task_async_result.status
+    #
+    # To get the response from the completed task, you can:
+    # was_email_sent, error_message = task_async_result.result
+    #
+    # AsyncResult API Reference: http://docs.celeryproject.org/en/latest/reference/celery.result.html
+    
 
     data = email_schema.dump(email).data
     return jsonify(data=data)
